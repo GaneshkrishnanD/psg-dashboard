@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support intake — 20 to 23 July 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202B; --steel:#5E6B77; --mut:#7C8894; --line:#D7DBDF;
+    --paper:#E9ECEF; --card:#FFFFFF; --fill:#F7F9FA;
+    --hivis:#F0B429; --done:#1B806A; --open:#D2542C; --flag:#B02E1F;
+    --display:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
+    --font:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.55;
+       font-feature-settings:'tnum' 1;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 22px 64px}
+
+  .label{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);font-weight:400}
+  header{border-top:6px solid var(--hivis);padding:14px 0 22px}
+  h1{font-family:var(--display);font-size:40px;font-weight:600;letter-spacing:.01em;margin:4px 0 0;line-height:1}
+  .lede{color:var(--steel);font-size:13px;margin:6px 0 0;max-width:70ch}
+
+  section{background:var(--card);border:1px solid var(--line);padding:18px 20px 20px;margin-bottom:18px}
+  h2{font-family:var(--display);font-size:21px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;margin:0 0 2px}
+  .sub{color:var(--steel);font-size:12.5px;margin:0 0 18px}
+
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);
+        border:1px solid var(--line);margin:0 -20px -20px;}
+  .kpi{background:var(--card);padding:16px 18px}
+  .kpi .n{font-family:var(--display);font-size:40px;font-weight:600;line-height:1.05;margin-top:2px}
+  .kpi .n span{font-size:17px;font-weight:500;color:var(--steel);margin-left:4px}
+  .kpi .note{font-size:12px;color:var(--steel)}
+
+  .days{display:flex;flex-direction:column;gap:12px}
+  .dayrow{display:grid;grid-template-columns:104px 1fr 154px;align-items:center;gap:16px}
+  .dayname{font-family:var(--mono);font-size:11.5px;color:var(--steel)}
+  .cells{display:flex;flex-wrap:wrap;gap:3px}
+  .cell{width:11px;height:11px;background:var(--done)}
+  .cell.o{background:var(--open)}
+  .dayfig{font-size:12.5px;color:var(--steel);text-align:right}
+  .dayfig b{font-family:var(--display);font-size:16px;color:var(--ink);font-weight:600}
+
+  .key{display:flex;flex-wrap:wrap;gap:18px;font-size:12px;color:var(--steel);margin:20px 0 0}
+  .key span{display:flex;align-items:center;gap:7px}
+  .kbox{width:10px;height:10px;display:inline-block;background:var(--done)}
+  .kbox.o,.kbox.ink{background:var(--open)}
+  .kbox.solid{background:var(--done)}
+
+  .filters{display:flex;flex-wrap:wrap;gap:18px 26px;align-items:flex-start}
+  .fg{display:flex;flex-direction:column;gap:7px;min-width:0}
+  .opts{display:flex;flex-wrap:wrap;gap:6px}
+  .opt{font-family:var(--font);font-size:12.5px;padding:4px 11px;border:1px solid var(--line);background:#fff;
+       color:var(--steel);cursor:pointer;border-radius:2px;line-height:1.4}
+  .opt:hover{border-color:var(--steel);color:var(--ink)}
+  .opt[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+  .opt:focus-visible{outline:2px solid var(--hivis);outline-offset:2px}
+  .clear{font-family:var(--font);font-size:12.5px;background:none;border:none;color:var(--steel);cursor:pointer;
+         text-decoration:underline;text-underline-offset:3px;margin-left:auto;align-self:center;padding:4px}
+  .clear:hover{color:var(--ink)}
+
+  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:34px 40px}
+  .chart h3{font-family:var(--display);font-size:17px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;margin:0 0 1px}
+  .chart p{font-size:12px;color:var(--steel);margin:0 0 14px}
+  .box{position:relative;width:100%;height:250px}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--steel);
+     font-weight:400;text-align:left;padding:0 12px 8px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:9px 12px 9px 0;border-bottom:1px solid #EDF0F2;vertical-align:top}
+  tbody tr:hover td{background:var(--fill)}
+  .tkey{font-family:var(--mono);font-size:12px;font-weight:500;white-space:nowrap}
+  .muted{color:var(--steel)}
+  .flag{color:var(--flag);font-weight:500}
+  .r{text-align:right;white-space:nowrap}
+  .bar{display:block;height:6px;background:var(--hivis);margin-top:5px}
+  .empty{color:var(--steel);padding:24px 0;font-size:13px}
+
+  .notes{columns:2;column-gap:34px;font-size:13px;color:var(--steel)}
+  .notes p{margin:0 0 9px;break-inside:avoid}
+  .notes b{color:var(--ink);font-weight:500}
+  footer{font-family:var(--mono);font-size:11px;color:var(--steel);border-top:1px solid var(--line);
+         padding-top:12px;margin-top:8px}
+
+  @media (max-width:720px){
+    .wrap{padding:20px 14px 48px}
+    h1{font-size:30px}
+    .kpis{grid-template-columns:1fr 1fr}
+    .dayrow{grid-template-columns:84px 1fr;grid-template-areas:'n c' '. f'}
+    .dayname{grid-area:n} .cells{grid-area:c} .dayfig{grid-area:f;text-align:left}
+    .notes{columns:1}
+    .charts{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="label">PSG support desk · L1 and L2 queue</p>
+    <h1>Ticket intake, <span id="hRange"></span></h1>
+    <p class="lede" id="hLede"></p>
+  </header>
+
+  <section>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section>
+    <h2>Intake by day</h2>
+    <p class="sub">One square per ticket, in the order it was raised.</p>
+    <div class="days" id="days"></div>
+    <div class="key">
+      <span><i class="kbox o"></i>Still open or in progress</span>
+      <span><i class="kbox"></i>Resolved or closed</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Filter</h2>
+    <p class="sub">Selections combine. Every figure below follows them.</p>
+    <div class="filters" id="filters"></div>
+  </section>
+
+  <section>
+    <div class="key" style="margin:0 0 26px">
+      <span><i class="kbox solid"></i><em style="font-style:normal" class="lgDone"></em></span>
+      <span><i class="kbox ink"></i><em style="font-style:normal" class="lgOpen"></em></span>
+    </div>
+    <div class="charts">
+      <div class="chart">
+        <h3>By issue type</h3>
+        <p>Percentages within each bar are that type's own split.</p>
+        <div class="box"><canvas id="cType" role="img" aria-label="Closed versus open tickets by issue type"></canvas></div>
+      </div>
+      <div class="chart">
+        <h3>By region</h3>
+        <p>Percentages within each bar are that region's own split.</p>
+        <div class="box"><canvas id="cRegion" role="img" aria-label="Closed versus open tickets by region"></canvas></div>
+      </div>
+      <div class="chart">
+        <h3>By L2 account manager</h3>
+        <p>Percentages within each bar are that manager's own split.</p>
+        <div class="box"><canvas id="cMgr" role="img" aria-label="Closed versus open tickets by L2 account manager"></canvas></div>
+      </div>
+      <div class="chart">
+        <h3>Time to resolve</h3>
+        <p>Share of resolved tickets in the current view.</p>
+        <div class="box"><canvas id="cTtr" role="img" aria-label="Distribution of resolution times"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Open backlog</h2>
+    <p class="sub" id="openSub"></p>
+    <table id="openTable">
+      <thead><tr><th>Ticket</th><th>Summary</th><th>Type</th><th>Priority</th><th>Region</th><th>L2 manager</th><th class="r">Age</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="empty" id="openEmpty" hidden>No open tickets match this filter.</div>
+  </section>
+
+  <section>
+    <h2>All tickets</h2>
+    <p class="sub" id="allSub"></p>
+    <table id="allTable">
+      <thead><tr><th>Ticket</th><th>Summary</th><th>Category</th><th>Region</th><th>Status</th><th>Resolved by</th><th class="r">Hours</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="empty" id="allEmpty" hidden>Nothing matches this filter. Clear one to widen the view.</div>
+  </section>
+
+  <section>
+    <h2>Read this before trusting the numbers</h2>
+    <p class="sub">What the export does not contain.</p>
+    <div class="notes" id="notes"></div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>window.DATA = {"meta":{"total":130,"from":"20 Jul 2026","to":"23 Jul 2026","days":["2026-07-20","2026-07-21","2026-07-22","2026-07-23"],"ref":"23 Jul 2026, 21:00","projects":19,"emptyCols":["Custom field (Queue Category)","Custom field (Task Owner)","Custom field (Task Owner).1","Due date","Custom field (Open Date)","Custom field (Exception Category)","Custom field (Exception Resolver)"],"dupCols":["Custom field (Task Owner)","Inward issue link (Blocks)"],"noCategory":31,"noResolver":5,"labelled":34},"rows":[{"key":"CPDMSSUP-2845","proj":"CPDMSSUP","type":"Error","pri":"Blocker","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Unassigned","tier":"L1Support","resolver":null,"reporter":"amol.shingote@cp.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 20:38","resolved":null,"ttr":null,"age":0.37,"sum":"New dealer ID creation- Airtecx-MH"},{"key":"DELUPS-2328","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Unassigned","tier":"L1Support","resolver":null,"reporter":"Delta@143","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 17:57","resolved":null,"ttr":null,"age":3.05,"sum":"RE: MAP with WH team for M Serv id"},{"key":"SSIPL-8836","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"North","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":null,"reporter":"krishan kumar","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 17:41","resolved":null,"ttr":null,"age":3.32,"sum":"SE260722628432-Part report issue"},{"key":"LIUG-8066","proj":"LIUG","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":null,"reporter":"konarkor1","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 16:59","resolved":null,"ttr":null,"age":4.02,"sum":"Issue with Expense Claim"},{"key":"VENUS-83","proj":"VENUS","type":"Risk","pri":"ShowStopper","status":"In-Progress","done":false,"cat":"Mservice Not Working","region":"West","mgr":"Janaki.P","tier":"Support L2","resolver":null,"reporter":"L1Support","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 16:51","resolved":null,"ttr":null,"age":4.15,"sum":"Trip start and Work start option not showing"},{"key":"DELUPS-2327","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Unassigned","tier":"L1Support","resolver":null,"reporter":"Delta@143","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 16:50","resolved":null,"ttr":null,"age":4.17,"sum":"RE: Unable to Process GRN Due to Missing Serial Number ( IND-27-IAR02013 , IND-27-IAR01890 )"},{"key":"MSNET-376","proj":"MSNET","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"Meghana Phalke","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 16:35","resolved":"23 Jul 17:43","ttr":1.13,"age":4.42,"sum":"Request to Close Calls"},{"key":"LIUG-8065","proj":"LIUG","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":null,"reporter":"pooja.dubey@liugong.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 16:34","resolved":null,"ttr":null,"age":4.43,"sum":"Request to Restrict Schedule Maintenance  Call Type Access for Dealer end"},{"key":"VENUS-82","proj":"VENUS","type":"Risk","pri":"ShowStopper","status":"In-Progress","done":false,"cat":"Mservice Not Working","region":"West","mgr":"Janaki.P","tier":"Support L2","resolver":null,"reporter":"venusservicepune@gmail.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 16:28","resolved":null,"ttr":null,"age":4.53,"sum":"GOVIND DHUMAL ENGINEER MY VENUS APP ID PASS"},{"key":"LIUG-8064","proj":"LIUG","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":null,"reporter":"pooja.dubey@liugong.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 16:25","resolved":null,"ttr":null,"age":4.58,"sum":"Regarding foreclosure of  Ticket SE225234 and Unlinking of  1500-Hour Coupon"},{"key":"SSIPL-8835","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"South","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"servicesupport.cochin@schwingstetterindia.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 16:14","resolved":null,"ttr":null,"age":4.77,"sum":"Service Report not showing in call SE260722628417."},{"key":"DOZCO-164","proj":"DOZCO","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"User Knowledge Gap","region":"South","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"Asha","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 16:08","resolved":null,"ttr":null,"age":4.87,"sum":"Unable to Update Current Customer for Machine VIO30/BG533"},{"key":"DELUPS-2326","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Unassigned","tier":"L1Support","resolver":null,"reporter":"V-Yogyata.K@deltaww.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 15:54","resolved":null,"ttr":null,"age":5.1,"sum":"Spare part sr.no. mismatch"},{"key":"DELUPS-2325","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Unassigned","tier":"L1Support","resolver":null,"reporter":"V-Tapan.Basu@deltaww.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 15:33","resolved":null,"ttr":null,"age":5.45,"sum":"RE: NEED TO DISPATCH NFO MODE   RE: OPEN CM CALLS--10 NOS-GLOBAL-PATNA"},{"key":"SSIPL-8834","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"South","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":null,"reporter":"ascse.pact@schwingdealer.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 15:33","resolved":null,"ttr":null,"age":5.45,"sum":"REPORTS NOT SHOWING IN   M SERVIICE"},{"key":"CTSUP-10332","proj":"CTSUP","type":"Error","pri":"Major","status":"In-Progress","done":false,"cat":"Mail To Customer","region":"North","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"bericopb1","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 14:57","resolved":null,"ttr":null,"age":6.05,"sum":"Urgent: M-Service Job Reports Not Being Received on Email"},{"key":"AQRS-168","proj":"AQRS","type":"Risk","pri":"ShowStopper","status":"In-Progress","done":false,"cat":"Workflow Issue","region":"West","mgr":"Janaki.P","tier":"Support L2","resolver":null,"reporter":"Rajesh Eearla","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 14:30","resolved":null,"ttr":null,"age":6.5,"sum":"Work flow issue in visit call"},{"key":"DELUPS-2324","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"Somayya.Pujeri@deltaww.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 13:16","resolved":null,"ttr":null,"age":7.73,"sum":"RE: IND-26-IAI04487"},{"key":"DOZCO-163","proj":"DOZCO","type":"DataCorrection","pri":"ShowStopper","status":"Open","done":false,"cat":"Uncategorised","region":"South","mgr":"Vignesh.M","tier":"Support L2","resolver":null,"reporter":"Asha","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 12:54","resolved":null,"ttr":null,"age":8.1,"sum":"Call#SE26072003512 -Not visible in Engineer mobile app"},{"key":"DELUPS-2323","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"Somayya.Pujeri@deltaww.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 12:54","resolved":null,"ttr":null,"age":8.1,"sum":"RE: RE-Indent No. MCIS-CH-S0138387-27-00038 ,M-Service portal for GRN processing issue ."},{"key":"SSIPL-8833","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"In-Progress","done":false,"cat":"Data Correction - Call","region":"NorthEast","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"saravanan.k","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 12:27","resolved":null,"ttr":null,"age":8.55,"sum":"FW: Non-Claim of Service Calls for Mitra Commercial"},{"key":"LIUG-8063","proj":"LIUG","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":null,"reporter":"pooja.dubey@liugong.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 12:25","resolved":null,"ttr":null,"age":8.58,"sum":"Issue while approving Expense Claim EPWCSE242703"},{"key":"CPDMSSUP-2844","proj":"CPDMSSUP","type":"Error","pri":"ShowStopper","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Janaki.P","tier":"Support L2","resolver":null,"reporter":"R Vishvak Sundar","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 12:23","resolved":null,"ttr":null,"age":8.62,"sum":"API Jason Format Error"},{"key":"SSIPL-8832","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Workflow Issue","region":"East","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"servicesupport.patna@schwingstetterindia.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 12:20","resolved":null,"ttr":null,"age":8.67,"sum":"we are unable to generate PWC."},{"key":"SSIPL-8831","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"South","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"inbavalli.s@tl.schwingstetterindia.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 12:19","resolved":null,"ttr":null,"age":8.68,"sum":"REG : Issue with Part Report Not Showing in Call Attachment - Request you to clear the Error"},{"key":"SSIPL-8830","proj":"SSIPL","type":"DataCorrection","pri":"ShowStopper","status":"In-Progress","done":false,"cat":"Digital report issue","region":"West","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"khushbu.dp@tl.schwingstetterindia.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 12:06","resolved":null,"ttr":null,"age":8.9,"sum":"Service reports not showing==>SE260722628514"},{"key":"DBINPO-322","proj":"DBINPO","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Others","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"deepakbhagwat.pawar1@doosan.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 11:58","resolved":"23 Jul 12:21","ttr":0.38,"age":9.03,"sum":"Fw: Request to Update Dealer Details in Bolink App"},{"key":"DELUPS-2322","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"Gunjan V","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 11:56","resolved":null,"ttr":null,"age":9.07,"sum":"RE: [DeltaUPShelpdesk] Request to raise the complaint for HPH 40K(Gen-2) UPS - 1No @ M/s. Manjushree Spntek Pvt Ltd - Bangalore"},{"key":"ACDMS-6494","proj":"ACDMS","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Others","region":"South","mgr":"Janaki.P","tier":"L1Support","resolver":null,"reporter":"Neha Moghe","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 11:48","resolved":null,"ttr":null,"age":9.2,"sum":"Mail Id updation"},{"key":"FIORI-14","proj":"FIORI","type":"Improvement","pri":"Major","status":"Open","done":false,"cat":"Improvement","region":"South","mgr":"Unassigned","tier":"Support L2","resolver":null,"reporter":"Jothi.R","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 11:34","resolved":null,"ttr":null,"age":9.43,"sum":"Urgent: PDI Checklist Issues and Pending Change Requests"},{"key":"SSIPL-8829","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Closed","done":true,"cat":"Duplicate","region":"North","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"JASMEET","reporter":"jasmeet.k@selfservit.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 11:05","resolved":"23 Jul 11:59","ttr":0.9,"age":9.92,"sum":"Re: Service Reports Not Showing on Portal"},{"key":"AQRS-167","proj":"AQRS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Others","region":"West","mgr":"Janaki.P","tier":"L1Support","resolver":"Avinash","reporter":"Dnyaneshwar Dilip Kulkarni","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 10:59","resolved":"23 Jul 15:22","ttr":4.38,"age":10.02,"sum":"Issue while adding Item code"},{"key":"DELUPS-2321","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"Gunjan V","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 10:50","resolved":null,"ttr":null,"age":10.17,"sum":"RE: Regarding Attachment Issues (SE26071534167)"},{"key":"SSIPL-8828","proj":"SSIPL","type":"DataCorrection","pri":"ShowStopper","status":"In-Progress","done":false,"cat":"Digital report issue","region":"West","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"khushbu.dp@tl.schwingstetterindia.com","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 10:46","resolved":null,"ttr":null,"age":10.23,"sum":"PWC Claim Issue ==>SE260501606370"},{"key":"CPCTDIR-101","proj":"CPCTDIR","type":"DataCorrection","pri":"ShowStopper","status":"In-Progress","done":false,"cat":"Data Correction - Pwclaim","region":"West","mgr":"Janaki.P","tier":"Support L2","resolver":null,"reporter":"Vinod Pawar","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 10:36","resolved":null,"ttr":null,"age":10.4,"sum":"RE: Support Required to Complete ROC"},{"key":"LIUG-8062","proj":"LIUG","type":"Error","pri":"ShowStopper","status":"Resolved","done":true,"cat":"User Knowledge Gap","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":"Bharath","reporter":"service@adityainfra.co","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 10:30","resolved":"23 Jul 14:47","ttr":4.28,"age":10.5,"sum":"Engineer M service not working"},{"key":"SSIPL-8827","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"In-Progress","done":false,"cat":"Workflow Issue","region":"North","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"noida@actionearthmovers.in","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 10:27","resolved":null,"ttr":null,"age":10.55,"sum":"Service Reports Not Showing on Portal"},{"key":"DELUPS-2320","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Others","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"Gunjan V","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 10:24","resolved":null,"ttr":null,"age":10.6,"sum":"RE: [DeltaUPShelpdesk] AI124C02856K2"},{"key":"DBINCO-852","proj":"DBINCO","type":"DataCorrection","pri":"ShowStopper","status":"In-Progress","done":false,"cat":"Digital report issue","region":"NorthEast","mgr":"Unassigned","tier":"L1Support","resolver":null,"reporter":"Niveditha S","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 09:59","resolved":null,"ttr":null,"age":11.02,"sum":"Kindly update the Meghalaya location in bob link - B5ND11298"},{"key":"ACDMS-6493","proj":"ACDMS","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"South","mgr":"Janaki.P","tier":"L1Support","resolver":"Tamilmani","reporter":"N SATHISH KUMAR","day":"2026-07-23","dayLabel":"Thu 23 Jul","created":"23 Jul 09:51","resolved":"23 Jul 11:41","ttr":1.83,"age":11.15,"sum":"TK No: 333048 Generation of Expense Document failed - Reg"},{"key":"SSIPL-8826","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"South","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"ascse.slcm@schwingdealer.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 17:52","resolved":null,"ttr":null,"age":27.13,"sum":"Issue in Generating Expense Claim for SMC Warranty Call"},{"key":"DBINCO-851","proj":"DBINCO","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"South","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"Niveditha S","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 17:19","resolved":null,"ttr":null,"age":27.68,"sum":"Call ID:\u00a0SE26070329905 - Kindly Correct the  HMR 7721 was incorrectly type 70721,Change in machine and also call."},{"key":"LIUG-8061","proj":"LIUG","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":null,"reporter":"neeraj@liugong.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 16:47","resolved":null,"ttr":null,"age":28.22,"sum":"Re: Re: M - Service User ID and Password"},{"key":"SSIPL-8825","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Closed","done":true,"cat":"Duplicate","region":"West","mgr":"Unassigned","tier":"L1Support","resolver":"Avinash","reporter":"avinash.k@selfservit.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 16:38","resolved":"22 Jul 16:40","ttr":0.03,"age":28.37,"sum":"Fw: Mservice issue"},{"key":"SSIPL-8824","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"Central","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":null,"reporter":"Fenix","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 16:35","resolved":null,"ttr":null,"age":28.42,"sum":"FW: PWC Issue \u2013 Second Time Raised & Claim Pending in Mservice dealer portal."},{"key":"DYN-2975","proj":"DYN","type":"Error","pri":"Major","status":"In-Progress","done":false,"cat":"Digital report issue","region":"NorthEast","mgr":"Bharath.N","tier":"Support L2","resolver":null,"reporter":"Tamal Das","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 16:33","resolved":null,"ttr":null,"age":28.45,"sum":"CC125_Genarel Inspection _ Report Issue"},{"key":"VENUS-81","proj":"VENUS","type":"DataCorrection","pri":"ShowStopper","status":"In-Progress","done":false,"cat":"Digital report issue","region":"West","mgr":"Janaki.P","tier":"Support L2","resolver":null,"reporter":"service@venusequipment.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 16:15","resolved":null,"ttr":null,"age":28.75,"sum":"Job Reference Number Not Visible in Report and App"},{"key":"SSIPL-8823","proj":"SSIPL","type":"Risk","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Active Call","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"ragini.r@tl.schwingstetterindia.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 16:10","resolved":"23 Jul 11:34","ttr":19.4,"age":28.83,"sum":"Mservice issue"},{"key":"ACDMS-6492","proj":"ACDMS","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"Central","mgr":"Janaki.P","tier":"Support L2","resolver":null,"reporter":"service@mithrace.in","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 16:09","resolved":null,"ttr":null,"age":28.85,"sum":"Ticket No: 332727 Reports showing blank"},{"key":"ACDMS-6491","proj":"ACDMS","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"Central","mgr":"Janaki.P","tier":"L1Support","resolver":null,"reporter":"service@mithrace.in","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 15:46","resolved":null,"ttr":null,"age":29.23,"sum":"Expense claim the standard amount is reflecting as 2000/- instead of 2500/- -328426"},{"key":"DELUPS-2319","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Data Correction - Inventory","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"V-Gopika.K@deltaww.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 15:39","resolved":null,"ttr":null,"age":29.35,"sum":"RE: RTW Expired Indent IND-27-IAI03948 Multiple Call Numbers Against"},{"key":"XCMG-4574","proj":"XCMG","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Machine","region":"NorthEast","mgr":"Janaki.P","tier":"L1Support","resolver":"Swarnali","reporter":"servicevinayakam3@gmail.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 15:27","resolved":"23 Jul 12:03","ttr":20.6,"age":29.55,"sum":"M service Issue"},{"key":"CTSUP-10331","proj":"CTSUP","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"NorthEast","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":null,"reporter":"banani.chowdhury@atlascopco.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 15:20","resolved":null,"ttr":null,"age":29.67,"sum":"RE: Request for customer detail... GA37_PE2110372... Perception index_Correction require in Dreams database"},{"key":"DELUPS-2318","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"In-Progress","done":false,"cat":"Data Correction - Inventory","region":"East","mgr":"Vignesh.M","tier":"Support L2","resolver":null,"reporter":"Somayya.Pujeri@deltaww.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 14:40","resolved":null,"ttr":null,"age":30.33,"sum":"RE: RE-Indent No. MCIS-CH-S0138387-27-00038 ,M-Service portal for GRN processing issue ."},{"key":"DELUPS-2317","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Closed","done":true,"cat":"Duplicate","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"Sandeep Fernandes","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 14:40","resolved":"22 Jul 18:11","ttr":3.52,"age":30.33,"sum":"RE: RE-Indent No. MCIS-CH-S0138387-27-00038 ,M-Service portal for GRN processing issue ."},{"key":"DELUPS-2316","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"East","mgr":"Vignesh.M","tier":"Support L2","resolver":"Vignesh","reporter":"V-Ranjitha.DR@deltaww.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 14:31","resolved":"22 Jul 19:06","ttr":4.58,"age":30.48,"sum":"Log the PM activity - RELIANCE PROJECTS AND PROPERTY MANAGEMENT"},{"key":"CPDMSSUP-2843","proj":"CPDMSSUP","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Others","region":"South","mgr":"Janaki.P","tier":"L1Support","resolver":"Tamilmani","reporter":"vaisyalakshmi.service@gmail.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 13:26","resolved":"22 Jul 15:36","ttr":2.17,"age":31.57,"sum":"DMS / M-service - New registration request - Mr P S Elayarsu- Reg"},{"key":"DELUPS-2315","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Closed","done":true,"cat":"User Knowledge Gap","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"V-Yogyata.K@deltaww.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 13:13","resolved":"22 Jul 13:30","ttr":0.28,"age":31.78,"sum":"Need to reassign call"},{"key":"CTSUP-10330","proj":"CTSUP","type":"Notifications","pri":"Major","status":"In-Progress","done":false,"cat":"Mail To Customer","region":"West","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"customersupport@enercare.in","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 13:01","resolved":null,"ttr":null,"age":31.98,"sum":"Fwd: Issue with Service Visit Report Email Delivery"},{"key":"LIUG-8060","proj":"LIUG","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Machine","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":"Bharath","reporter":"Moumita Nath","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 12:46","resolved":"22 Jul 14:36","ttr":1.83,"age":32.23,"sum":"Unable to generate Expense claim"},{"key":"LIUG-8059","proj":"LIUG","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":"Bharath","reporter":"Moumita Nath","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 12:43","resolved":"22 Jul 14:46","ttr":2.05,"age":32.28,"sum":"Unable to generate expense claim"},{"key":"CTSUP-10329","proj":"CTSUP","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Pwclaim","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"utllitymh1","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 12:43","resolved":"22 Jul 13:32","ttr":0.82,"age":32.28,"sum":"Job can't close"},{"key":"CTSUP-10328","proj":"CTSUP","type":"Risk","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Mservice Not Working","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"Ramya Pillai","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 12:42","resolved":"23 Jul 16:13","ttr":27.52,"age":32.3,"sum":"Re: Issue with MyCTCare / MService Application"},{"key":"CTSUP-10327","proj":"CTSUP","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"utllitymh1","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 12:40","resolved":"22 Jul 13:22","ttr":0.7,"age":32.33,"sum":"Foreclosure all jobs"},{"key":"LIUG-8058","proj":"LIUG","type":"Error","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":"Bharath","reporter":"pooja.dubey@liugong.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 12:15","resolved":"23 Jul 09:47","ttr":21.53,"age":32.75,"sum":"Issue Completing Ticket SE243393 \u2013 Trip Start/Finish Option Not Visible"},{"key":"SSIPL-8822","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Closed","done":true,"cat":"Duplicate","region":"South","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Tamilmani","reporter":"Sathish.ct","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 12:00","resolved":"22 Jul 12:41","ttr":0.68,"age":33.0,"sum":"Reg: M/s. SLV TRADERS - Goodwill Approval"},{"key":"LIUG-8057","proj":"LIUG","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":"Bharath","reporter":"pooja.dubey@liugong.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 11:54","resolved":"23 Jul 14:49","ttr":26.92,"age":33.1,"sum":"Issue Completing Ticket SE243393 \u2013 Trip Start/Finish Option Not Visible"},{"key":"DELUPS-2314","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Data Correction - Machine","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"V-Gopika.K@deltaww.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 11:14","resolved":null,"ttr":null,"age":33.77,"sum":"AMTRON 53 Machines upload"},{"key":"DELUPS-2313","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Inventory","region":"East","mgr":"Vignesh.M","tier":"Support L2","resolver":"Vignesh","reporter":"V-Ajit.Gaikwad@deltaww.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 10:59","resolved":"22 Jul 12:45","ttr":1.77,"age":34.02,"sum":"RE: SE26072134960_AE324600127WB_UMANG PARTICLES SCIENCE P LTD"},{"key":"LIUG-8056","proj":"LIUG","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Others","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":"Bharath","reporter":"pooja.dubey@liugong.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 10:50","resolved":"22 Jul 14:54","ttr":4.07,"age":34.17,"sum":"Re: RE: Update the Labour code"},{"key":"DELUPS-2312","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Machine","region":"East","mgr":"Vignesh.M","tier":"Support L2","resolver":"Vignesh","reporter":"Gunjan V","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 10:47","resolved":"22 Jul 19:10","ttr":8.38,"age":34.22,"sum":"FW: Web werks 15 KVA UPS"},{"key":"DYN-2974","proj":"DYN","type":"Error","pri":"Major","status":"In-Progress","done":false,"cat":"Workflow Issue","region":"North","mgr":"Bharath.N","tier":"Support L2","resolver":null,"reporter":"crm.dynapac@gnmotors.org","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 10:40","resolved":null,"ttr":null,"age":34.33,"sum":"FSR Report Not Visible in DMS"},{"key":"EDS-2880","proj":"EDS","type":"Error","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Mservice Not Working","region":"South","mgr":"Bharath.N","tier":"L1Support","resolver":"Tamilmani","reporter":"reshma.kr@pactmachines.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 10:39","resolved":"22 Jul 13:34","ttr":2.92,"age":34.35,"sum":"M SERVICE-  AKHIL U S"},{"key":"DELUPS-2311","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Inventory","region":"East","mgr":"Unassigned","tier":"Support L2","resolver":"Vignesh","reporter":"V-Sanjay.Y@deltaww.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 10:32","resolved":"22 Jul 12:13","ttr":1.68,"age":34.47,"sum":"RE: The spare parts availability is not showing in CRM."},{"key":"DELUPS-2310","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Closed","done":true,"cat":"Duplicate","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"V-Gopika.K@deltaww.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 10:16","resolved":"22 Jul 12:13","ttr":1.95,"age":34.73,"sum":"RE: The spare parts availability is not showing in CRM."},{"key":"DELUPS-2309","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Closed","done":true,"cat":"Duplicate","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"V-Ranjitha.DR@deltaww.com","day":"2026-07-22","dayLabel":"Wed 22 Jul","created":"22 Jul 10:14","resolved":"22 Jul 12:13","ttr":1.98,"age":34.77,"sum":"The spare parts availability is not showing in CRM."},{"key":"LIUG-8055","proj":"LIUG","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Data Correction - Call","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":null,"reporter":"bmrservice@bmreipl.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 17:44","resolved":null,"ttr":null,"age":51.27,"sum":"Request to Delete Mistakenly Uploaded Images from Call ID SE244222"},{"key":"DELUPS-2308","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Closed","done":true,"cat":"Wrong Request","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"Somayya.Pujeri@deltaww.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 17:21","resolved":"21 Jul 18:10","ttr":0.82,"age":51.65,"sum":"RE: Urgent    RE: Urgent support required    RE: [Delta UPS helpdesk] Breakdown UPS-2_ E1K24B00058R0_Asansol MSC"},{"key":"DELUPS-2307","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Bulk data","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"V-Gopika.K@deltaww.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 16:19","resolved":null,"ttr":null,"age":52.68,"sum":"Warranty update request till 30th June"},{"key":"DELUPS-2306","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Others","region":"East","mgr":"Vignesh.M","tier":"Support L2","resolver":"Vignesh","reporter":"V-Boopathy.A@deltaww.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 15:57","resolved":"22 Jul 13:20","ttr":21.38,"age":53.05,"sum":"FW: CRM Credentials Required-CHN"},{"key":"DELUPS-2305","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Inventory","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":"Vignesh","reporter":"Delta@143","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 15:41","resolved":"21 Jul 17:56","ttr":2.25,"age":53.32,"sum":"RE: Spare request call no-SE26071433752, USER NAME-Madhav Embroidery"},{"key":"AQRS-166","proj":"AQRS","type":"Help","pri":"Major","status":"Resolved","done":true,"cat":"Others","region":"West","mgr":"Janaki.P","tier":"L1Support","resolver":"Avinash","reporter":"Rajesh Eearla","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 14:35","resolved":"22 Jul 13:08","ttr":22.55,"age":54.42,"sum":"Spares to be added in M service item master"},{"key":"AQRS-165","proj":"AQRS","type":"Error","pri":"Major","status":"In-Progress","done":false,"cat":"Workflow Issue","region":"NorthEast","mgr":"Janaki.P","tier":"Support L2","resolver":null,"reporter":"Rajesh Eearla","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 14:16","resolved":null,"ttr":null,"age":54.73,"sum":"Warranty claim report is unavailable for ASC registered ESN"},{"key":"LIUG-8054","proj":"LIUG","type":"Error","pri":"Major","status":"Closed","done":true,"cat":"Mapping","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":"Bharath","reporter":"pooja.dubey@liugong.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 13:01","resolved":"21 Jul 16:53","ttr":3.87,"age":55.98,"sum":"Re: Facing issue while PWC Generation"},{"key":"SSIPL-8821","proj":"SSIPL","type":"DataCorrection","pri":"ShowStopper","status":"Closed","done":true,"cat":"Duplicate","region":"South","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Tamilmani","reporter":"ascse.pact@schwingdealer.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 12:44","resolved":"21 Jul 12:53","ttr":0.15,"age":56.27,"sum":"REPEATED M SERVICE ISSUE OF MRIDUL M"},{"key":"SSIPL-8820","proj":"SSIPL","type":"DataCorrection","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Mservice Not Working","region":"South","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Tamilmani","reporter":"ascse.pact@schwingdealer.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 12:41","resolved":"21 Jul 13:17","ttr":0.6,"age":56.32,"sum":"REPEATED M SERVICE ISSUE OF MRIDUL M"},{"key":"CTSUP-10326","proj":"CTSUP","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Foreclosure","region":"North","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"JASMEET","reporter":"Garima Saini","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 12:34","resolved":"22 Jul 12:26","ttr":23.87,"age":56.43,"sum":"RE: Transfer the machines to Sarvap Solutions"},{"key":"DBINCO-850","proj":"DBINCO","type":"Improvement","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"South","mgr":"Ganesh Krishnan.D","tier":"Support L2","resolver":null,"reporter":"Niveditha S","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 12:24","resolved":null,"ttr":null,"age":56.6,"sum":"In PWC - Need Access to Add Part Number in OEMSC Login"},{"key":"DELUPS-2304","proj":"DELUPS","type":"Error","pri":"Major","status":"Open","done":false,"cat":"CER","region":"East","mgr":"Vignesh.M","tier":"L1Support","resolver":null,"reporter":"Delta@143","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 11:48","resolved":null,"ttr":null,"age":57.2,"sum":"RE: Request to Correct GST Calculation in CRM for UPS Return Indent"},{"key":"FIORI-13","proj":"FIORI","type":"DataCorrection","pri":"Major","status":"Open","done":false,"cat":"Mapping","region":"South","mgr":"Unassigned","tier":"L1Support","resolver":null,"reporter":"jasmeet.k@selfservit.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 11:29","resolved":null,"ttr":null,"age":57.52,"sum":"Fw: Request for Deactivation of Employee Login and Dealer/Area Mapping Update"},{"key":"DELUPS-2303","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"East","mgr":"Vignesh.M","tier":"Support L2","resolver":"Vignesh","reporter":"Gunjan V","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 10:58","resolved":"21 Jul 11:52","ttr":0.9,"age":58.03,"sum":"RE: For spares delete"},{"key":"DOZCO-162","proj":"DOZCO","type":"DataCorrection","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Active Call","region":"South","mgr":"Vignesh.M","tier":"L1Support","resolver":"Tamilmani","reporter":"jasmeet.k@selfservit.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 10:46","resolved":"22 Jul 13:33","ttr":26.78,"age":58.23,"sum":"Fw: Trip start option not showing to the Engineer - Arjun suresh"},{"key":"ACDMS-6490","proj":"ACDMS","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Machine","region":"South","mgr":"Janaki.P","tier":"L1Support","resolver":"Tamilmani","reporter":"c.sethu@atlascopco.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 10:42","resolved":"21 Jul 11:27","ttr":0.75,"age":58.3,"sum":"FW: NEW MACHINE UPDATES REQUIRED"},{"key":"SSIPL-8819","proj":"SSIPL","type":"DataCorrection","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Unable To Retrieve","region":"East","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Soumya","reporter":"Fenix","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 10:29","resolved":"21 Jul 16:39","ttr":6.17,"age":58.52,"sum":"RE: M Service Login id detail"},{"key":"VENUS-80","proj":"VENUS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Machine","region":"West","mgr":"Janaki.P","tier":"L1Support","resolver":"Avinash","reporter":"service@venusequipment.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 10:00","resolved":"21 Jul 17:08","ttr":7.13,"age":59.0,"sum":"Request to Correct Commissioning Date"},{"key":"DELUPS-2302","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Others","region":"East","mgr":"Vignesh.M","tier":"Support L2","resolver":"Vignesh","reporter":"V-Gopika.K@deltaww.com","day":"2026-07-21","dayLabel":"Tue 21 Jul","created":"21 Jul 09:34","resolved":"21 Jul 11:02","ttr":1.47,"age":59.43,"sum":"RE: [DeltaUPShelpdesk] BAJAJ LIFE INSURANCE- Waidhan"},{"key":"CTSUP-10325","proj":"CTSUP","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Workflow Issue","region":"North","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"JASMEET","reporter":"bericopb1","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 18:14","resolved":"21 Jul 13:33","ttr":19.32,"age":74.77,"sum":"Service Leads not visible in M Service: Berico Sales"},{"key":"SSIPL-8818","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"User Knowledge Gap","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"shailesh prajapati","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 17:37","resolved":"21 Jul 06:35","ttr":12.97,"age":75.38,"sum":"Need to Close call No-SE260718627576"},{"key":"AQRS-164","proj":"AQRS","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Active Call","region":"North","mgr":"Janaki.P","tier":"L1Support","resolver":"JASMEET","reporter":"Rajesh Eearla","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 17:35","resolved":"22 Jul 12:27","ttr":42.87,"age":75.42,"sum":"Visit call allowed to start the work after completion of call _VI26071503374"},{"key":"SSIPL-8817","proj":"SSIPL","type":"DataCorrection","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Active Call","region":"North","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"JASMEET","reporter":"servicesupport.ndl@schwingstetterindia.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 17:18","resolved":"21 Jul 11:25","ttr":18.12,"age":75.7,"sum":"Unable to login in  Mservice"},{"key":"DELUPS-2301","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"East","mgr":"Vignesh.M","tier":"Support L2","resolver":"Vignesh","reporter":"V-Ranjitha.DR@deltaww.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 17:16","resolved":"20 Jul 17:41","ttr":0.42,"age":75.73,"sum":"RE: [DeltaUPShelpdesk] Log the Installation & Commissioning call - FOXCONN HON HAI TECHNOLOGY INDIA MEGA DEVELOPMENT PRIVATE"},{"key":"MYMARK-200","proj":"MYMARK","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Others","region":"South","mgr":"Unassigned","tier":"L1Support","resolver":"Tamilmani","reporter":"poonam.yadav@cp.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 17:03","resolved":"22 Jul 10:34","ttr":41.52,"age":75.95,"sum":"Update Service Engineer Name in MyMark Portal"},{"key":"EDS-2879","proj":"EDS","type":"Error","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Mservice Not Working","region":"South","mgr":"Bharath.N","tier":"L1Support","resolver":"Tamilmani","reporter":"reshma.kr@pactmachines.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 16:38","resolved":"20 Jul 17:31","ttr":0.88,"age":76.37,"sum":"M SERVICE-  ANU S"},{"key":"SSIPL-8816","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"Jayvanti kukreja","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 15:57","resolved":"20 Jul 16:24","ttr":0.45,"age":77.05,"sum":"Close the call - SE260216586143"},{"key":"ACDMS-6489","proj":"ACDMS","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Unassigned","tier":"L1Support","resolver":null,"reporter":"Neha Moghe","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 15:23","resolved":null,"ttr":null,"age":77.62,"sum":"RE: REGARDING INABILITY TO ASSINGH IN WARRANTY SERVICE IN DMS"},{"key":"AQRS-163","proj":"AQRS","type":"Error","pri":"Major","status":"In-Progress","done":false,"cat":"Mail To Customer","region":"NorthEast","mgr":"Janaki.P","tier":"Support L2","resolver":null,"reporter":"Dnyaneshwar Dilip Kulkarni","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 15:17","resolved":null,"ttr":null,"age":77.72,"sum":"FW: AQUARIUS : TA/DA CLAIM"},{"key":"SSIPL-8815","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Workflow Issue","region":"North","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"JASMEET","reporter":"jasmeet.k@selfservit.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 15:11","resolved":"21 Jul 11:55","ttr":20.73,"age":77.82,"sum":"Fw: M Service Error Issue"},{"key":"SSIPL-8814","proj":"SSIPL","type":"Improvement","pri":"Minor","status":"Open","done":false,"cat":"Uncategorised","region":"East","mgr":"Unassigned","tier":"Unassigned","resolver":null,"reporter":"Manish kumar","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 15:08","resolved":null,"ttr":null,"age":77.87,"sum":"System Hanging Issue in Customer Master (mService Portal)"},{"key":"CPCT-2099","proj":"CPCT","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"Central","mgr":"Vignesh.M","tier":"Support L2","resolver":null,"reporter":"Muthukumar","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 14:55","resolved":null,"ttr":null,"age":78.08,"sum":"Request to add machine type in service"},{"key":"SSIPL-8813","proj":"SSIPL","type":"Risk","pri":"ShowStopper","status":"Resolved","done":true,"cat":"User Knowledge Gap","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"Jayvanti kukreja","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 14:15","resolved":"20 Jul 15:18","ttr":1.05,"age":78.75,"sum":"M-service issue  - OWC11220"},{"key":"LIUG-8053","proj":"LIUG","type":"Error","pri":"Major","status":"Open","done":false,"cat":"Data Correction - Model","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":null,"reporter":"pooja.dubey@liugong.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 14:04","resolved":null,"ttr":null,"age":78.93,"sum":"Regarding new model addition in M Service"},{"key":"DELUPS-2300","proj":"DELUPS","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Bulk data","region":"East","mgr":"Vignesh.M","tier":"Support L2","resolver":"Vignesh","reporter":"V-Gopika.K@deltaww.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 13:25","resolved":"20 Jul 14:45","ttr":1.33,"age":79.58,"sum":"RE: AMTRON Machines upload"},{"key":"SSIPL-8812","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Foreclosure","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"avinash.k@selfservit.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 13:17","resolved":"20 Jul 14:21","ttr":1.07,"age":79.72,"sum":"Fw: M- Service - Close the call -SE260429605957"},{"key":"AQRS-162","proj":"AQRS","type":"Error","pri":"Major","status":"Closed","done":true,"cat":"User Knowledge Gap","region":"NorthEast","mgr":"Janaki.P","tier":"L1Support","resolver":"Swarnali","reporter":"Rajesh Eearla","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 13:09","resolved":"21 Jul 17:40","ttr":28.52,"age":79.85,"sum":"Work flow issue in visit call"},{"key":"FIORI-12","proj":"FIORI","type":"Improvement","pri":"Major","status":"Open","done":false,"cat":"Uncategorised","region":"South","mgr":"Unassigned","tier":"Support L2","resolver":null,"reporter":"Jothi.R","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 13:04","resolved":null,"ttr":null,"age":79.93,"sum":"Request for Job Completion days Tracking Data"},{"key":"DBINCO-849","proj":"DBINCO","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Machine","region":"South","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Tamilmani","reporter":"Niveditha S","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 12:56","resolved":"22 Jul 10:33","ttr":45.62,"age":80.07,"sum":"DBIB55ZGJM0012061 / DBIB55ZGAM0012064 - Request to change in the date of AMC in boblink"},{"key":"CTSUP-10324","proj":"CTSUP","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Quotation","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"Ramya Pillai","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 12:10","resolved":"21 Jul 17:17","ttr":29.12,"age":80.83,"sum":"Re: Dreams Quotation issue to regenerate and revise."},{"key":"SSIPL-8811","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Expense","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"Ravat Hetal","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 11:47","resolved":"22 Jul 10:42","ttr":46.92,"age":81.22,"sum":"Mservice Expense claim Description Not Show."},{"key":"SSIPL-8810","proj":"SSIPL","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Others","region":"North","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"JASMEET","reporter":"Manish kumar","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 11:32","resolved":"21 Jul 10:57","ttr":23.42,"age":81.47,"sum":"Unable to open PDF report in mService claim"},{"key":"ACDMS-6488","proj":"ACDMS","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Invoice","region":"South","mgr":"Janaki.P","tier":"L1Support","resolver":"Tamilmani","reporter":"Neha Moghe","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 11:31","resolved":"21 Jul 14:52","ttr":27.35,"age":81.48,"sum":"FW: Issue with Invoice Submission Through DMS"},{"key":"ACDMS-6487","proj":"ACDMS","type":"Error","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Mservice Not Working","region":"South","mgr":"Janaki.P","tier":"L1Support","resolver":"Tamilmani","reporter":"smtshari@gmail.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 11:19","resolved":"20 Jul 12:38","ttr":1.32,"age":81.68,"sum":"Fwd: Kindly realse block"},{"key":"EDS-2878","proj":"EDS","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Call","region":"East","mgr":"Bharath.N","tier":"L1Support","resolver":"Soumya","reporter":"tapash.nayak@kasisales.in","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 11:09","resolved":"20 Jul 15:07","ttr":3.97,"age":81.85,"sum":"Fore Close The Commissioning Call"},{"key":"SSIPL-8809","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Digital report issue","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"Ravat Hetal","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 10:47","resolved":"22 Jul 10:44","ttr":47.95,"age":82.22,"sum":"Mservice Add Customer Details In Quality Issue."},{"key":"EDS-2877","proj":"EDS","type":"Help","pri":"Major","status":"Closed","done":true,"cat":"Duplicate","region":"North","mgr":"Bharath.N","tier":"L1Support","resolver":"JASMEET","reporter":"Munish Kumar","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 10:39","resolved":"20 Jul 13:26","ttr":2.78,"age":82.35,"sum":"EDS-2876 Creating User ID for New OEM RPSM-Delhi region-MRS division in PIMS"},{"key":"EDS-2876","proj":"EDS","type":"Error","pri":"Major","status":"In-Progress","done":false,"cat":"Mapping","region":"North","mgr":"Bharath.N","tier":"Support L2","resolver":null,"reporter":"Munish Kumar","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 10:36","resolved":null,"ttr":null,"age":82.4,"sum":"Creating User ID for New OEM RPSM-Delhi region-MRS division in PIMS"},{"key":"EDS-2875","proj":"EDS","type":"Error","pri":"ShowStopper","status":"Resolved","done":true,"cat":"Mservice Not Working","region":"South","mgr":"Bharath.N","tier":"L1Support","resolver":"Tamilmani","reporter":"reshma.kr@pactmachines.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 10:35","resolved":"20 Jul 12:22","ttr":1.78,"age":82.42,"sum":"M SERVICE-  AKHIL U S"},{"key":"SSIPL-8808","proj":"SSIPL","type":"DataCorrection","pri":"Major","status":"Resolved","done":true,"cat":"Foreclosure","region":"West","mgr":"Ganesh Krishnan.D","tier":"L1Support","resolver":"Avinash","reporter":"dattprasad.s@tl.schwingstetterindia.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 10:21","resolved":"20 Jul 14:22","ttr":4.02,"age":82.65,"sum":"Kindly Foreclosure the call SE260520611393"},{"key":"EDS-2874","proj":"EDS","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Data Correction - Model","region":"South","mgr":"Bharath.N","tier":"L1Support","resolver":"Tamilmani","reporter":"reshma.kr@pactmachines.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 10:17","resolved":"20 Jul 10:56","ttr":0.65,"age":82.72,"sum":"NEED TO CHANGE CUSTOMER DETAILS   IN PIMS -   GAYATHRI ROCK PRODUCTS"},{"key":"LIUG-8052","proj":"LIUG","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Mail To Customer","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":"Bharath","reporter":"pooja.dubey@liugong.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 10:10","resolved":"23 Jul 18:00","ttr":79.83,"age":82.83,"sum":"Re: Re: Regarding Temporary Suspension of Ticket Escalation Emails"},{"key":"LIUG-8051","proj":"LIUG","type":"Error","pri":"Major","status":"Resolved","done":true,"cat":"Mapping","region":"HO","mgr":"Bharath.N","tier":"L1Support","resolver":"Bharath","reporter":"pooja.dubey@liugong.com","day":"2026-07-20","dayLabel":"Mon 20 Jul","created":"20 Jul 09:28","resolved":"20 Jul 12:34","ttr":3.1,"age":83.53,"sum":"Re: Support Required - Invalid Assignee Error Whie Submitting Warranty Approval (CALL NO- SE251826)"}]};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  var C = { ink:'#16202B', sec:'#5E6B77', mut:'#7C8894', line:'#D7DBDF', closed:'#1B806A', open:'#D2542C' };
+  var FONT = "400 11px Inter, system-ui, -apple-system, sans-serif";
+  var M = window.DATA.meta, D = window.DATA.rows;
+  var VIEW_TOTAL = D.length, TTR_TOTAL = 1;
+
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function pct(n,d){ return d ? Math.round(n/d*100) : 0; }
+  function uniq(k){ var s=[]; D.forEach(function(t){ if(s.indexOf(t[k])<0) s.push(t[k]); }); return s.sort(); }
+  function median(a){ if(!a.length) return null; var s=a.slice().sort(function(x,y){return x-y;}); var m=Math.floor(s.length/2);
+    return s.length%2 ? s[m] : (s[m-1]+s[m])/2; }
+  function hrs(h){ if(h==null) return '—'; if(h<1) return Math.round(h*60)+' min'; if(h<48) return h.toFixed(1)+' h'; return (h/24).toFixed(1)+' d'; }
+  function days(h){ return h==null ? '—' : (h<24 ? Math.round(h)+' h' : (h/24).toFixed(1)+' d'); }
+
+  document.getElementById('hRange').textContent = M.from.replace(/ \d{4}/,'') + ' to ' + M.to;
+  document.getElementById('hLede').textContent =
+    M.total + ' tickets raised across ' + M.days.length + ' days and ' + M.projects +
+    ' customer projects, tracked to ' + M.ref + '.';
+  document.getElementById('foot').textContent =
+    'Built from the JIRA export · ' + M.total + ' tickets · ages measured to ' + M.ref;
+
+  document.getElementById('notes').innerHTML = [
+    ['Seven columns are entirely empty', M.emptyCols.join(', ') + '.'],
+    ['Due date is never set', 'so nothing here can be measured against an SLA target.'],
+    ['Two column names are duplicated', M.dupCols.join(' and ') + '. Most parsers silently drop one copy.'],
+    ['Issue Category is blank on ' + M.noCategory + ' tickets', 'shown here as Uncategorised — that is ' + pct(M.noCategory, M.total) + '% of the export.'],
+    ['Resolved By is blank on ' + M.noResolver + ' closed tickets', 'so credit for the work is incomplete.'],
+    ['Labels appear on ' + M.labelled + ' tickets', 'with inconsistent casing and spelling, so they cannot be grouped reliably.'],
+    ['The newest day is not finished', 'tickets raised on the final day have had less time to close, which flatters nothing and penalises nothing — just read that row with care.'],
+    ['Ages are measured to ' + M.ref, 'rerun the extract to move the reference point.']
+  ].map(function(n){ return '<p><b>'+esc(n[0])+'</b> — '+esc(n[1])+'</p>'; }).join('');
+
+  /* filters ------------------------------------------------------------ */
+  var F = { region:null, type:null, pri:null, day:null, status:null };
+  function view(){
+    return D.filter(function(t){
+      if(F.region && t.region!==F.region) return false;
+      if(F.type && t.type!==F.type) return false;
+      if(F.pri && t.pri!==F.pri) return false;
+      if(F.day && t.day!==F.day) return false;
+      if(F.status==='open' && t.done) return false;
+      if(F.status==='done' && !t.done) return false;
+      return true;
+    });
+  }
+  var fEl = document.getElementById('filters');
+  function grp(label, key, opts){
+    return '<div class="fg"><span class="label">'+label+'</span><div class="opts">' +
+      opts.map(function(o){ return '<button class="opt" aria-pressed="false" data-k="'+key+'" data-v="'+esc(o.v)+'">'+esc(o.t)+'</button>'; }).join('') +
+      '</div></div>';
+  }
+  var dayOpts = M.days.map(function(d){
+    var one = D.filter(function(t){ return t.day===d; })[0];
+    return { v:d, t: one ? one.dayLabel : d };
+  });
+  fEl.innerHTML =
+    grp('Day','day', dayOpts) +
+    grp('Region','region', uniq('region').map(function(x){return {v:x,t:x};})) +
+    grp('Issue type','type', uniq('type').map(function(x){return {v:x,t:x};})) +
+    grp('Priority','pri', uniq('pri').map(function(x){return {v:x,t:x};})) +
+    grp('Status','status', [{v:'open',t:'Open'},{v:'done',t:'Closed'}]) +
+    '<button class="clear" id="clear">Clear all</button>';
+  fEl.addEventListener('click', function(e){
+    var b = e.target.closest('.opt');
+    if(b){ F[b.dataset.k] = (F[b.dataset.k]===b.dataset.v ? null : b.dataset.v); render(); return; }
+    if(e.target.id==='clear'){ F={region:null,type:null,pri:null,day:null,status:null}; render(); }
+  });
+
+  /* charts ------------------------------------------------------------- */
+  var charts = {};
+  var segPct = {
+    id:'segPct',
+    afterDatasetsDraw:function(chart){
+      var ctx = chart.ctx, ds = chart.data.datasets;
+      ctx.save(); ctx.font = FONT; ctx.textBaseline = 'middle';
+      chart.data.labels.forEach(function(_, i){
+        var total = ds.reduce(function(s,d){ return s+(d.data[i]||0); }, 0);
+        if(!total) return;
+        var end = null;
+        ds.forEach(function(d, di){
+          var v = d.data[i]; if(!v) return;
+          var bar = chart.getDatasetMeta(di).data[i]; if(!bar) return;
+          if(end==null || bar.x>end) end = bar.x;
+          if(Math.abs(bar.x-bar.base) < 30) return;
+          ctx.fillStyle = '#FFFFFF';
+          ctx.textAlign = 'center';
+          ctx.fillText(Math.round(v/total*100)+'%', (bar.x+bar.base)/2, bar.y);
+        });
+        if(end!=null){
+          var y = chart.getDatasetMeta(0).data[i].y;
+          ctx.textAlign = 'left';
+          ctx.fillStyle = C.ink;  ctx.fillText(String(total), end+10, y);
+          ctx.fillStyle = C.mut;  ctx.fillText(pct(total, VIEW_TOTAL)+'% of view', end+10+ctx.measureText(String(total)).width+9, y);
+        }
+      });
+      ctx.restore();
+    }
+  };
+  function stacked(id, g){
+    if(charts[id]) charts[id].destroy();
+    charts[id] = new Chart(document.getElementById(id), {
+      type:'bar',
+      data:{ labels:g.labels, datasets:[
+        {label:'Closed', data:g.closed, backgroundColor:C.closed, barThickness:15},
+        {label:'Open',   data:g.open,   backgroundColor:C.open,  barThickness:15}]},
+      options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y', animation:{duration:200},
+        layout:{padding:{right:126}},
+        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#111', padding:9, cornerRadius:2, displayColors:false,
+          callbacks:{ label:function(c){
+            var i=c.dataIndex, tot=c.chart.data.datasets.reduce(function(s,d){return s+(d.data[i]||0);},0);
+            return c.dataset.label+': '+c.raw+' of '+tot+' ('+pct(c.raw,tot)+'%)'; }}}},
+        scales:{ x:{stacked:true, display:false},
+                 y:{stacked:true, grid:{display:false}, border:{display:false}, ticks:{color:C.sec, font:{size:11.5}}}}},
+      plugins:[segPct]
+    });
+  }
+  function byKey(rows, key){
+    var m = {};
+    rows.forEach(function(t){ if(!m[t[key]]) m[t[key]]=[0,0]; m[t[key]][t.done?0:1]++; });
+    var labels = Object.keys(m).sort(function(a,b){ return (m[b][0]+m[b][1])-(m[a][0]+m[a][1]); });
+    return { labels:labels, closed:labels.map(function(l){return m[l][0];}), open:labels.map(function(l){return m[l][1];}) };
+  }
+
+  var BUCKETS = [[0,1,'< 1 h'],[1,4,'1–4 h'],[4,12,'4–12 h'],[12,24,'12–24 h'],[24,72,'1–3 d'],[72,1e6,'> 3 d']];
+  var barPct = {
+    id:'barPct',
+    afterDatasetsDraw:function(chart){
+      var ctx = chart.ctx, data = chart.data.datasets[0].data;
+      ctx.save(); ctx.font = FONT; ctx.textAlign='center'; ctx.textBaseline='bottom';
+      chart.getDatasetMeta(0).data.forEach(function(bar,i){
+        var v = data[i]; if(!v) return;
+        ctx.fillStyle = C.ink; ctx.fillText(String(v), bar.x, bar.y-15);
+        ctx.fillStyle = C.mut; ctx.fillText(Math.round(v/TTR_TOTAL*100)+'%', bar.x, bar.y-3);
+      });
+      ctx.restore();
+    }
+  };
+  function ttrChart(rows){
+    var res = rows.filter(function(t){ return t.ttr!=null; });
+    TTR_TOTAL = res.length || 1;
+    var counts = BUCKETS.map(function(b){ return res.filter(function(t){ return t.ttr>=b[0] && t.ttr<b[1]; }).length; });
+    if(charts.cTtr) charts.cTtr.destroy();
+    charts.cTtr = new Chart(document.getElementById('cTtr'), {
+      type:'bar',
+      data:{ labels:BUCKETS.map(function(b){return b[2];}), datasets:[{label:'Tickets', data:counts, backgroundColor:C.ink, barThickness:15}]},
+      options:{ responsive:true, maintainAspectRatio:false, animation:{duration:200},
+        layout:{padding:{top:28}},
+        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#111', padding:9, cornerRadius:2, displayColors:false,
+          callbacks:{ label:function(c){ return c.raw+' of '+TTR_TOTAL+' resolved ('+pct(c.raw,TTR_TOTAL)+'%)'; }}}},
+        scales:{ x:{grid:{display:false}, border:{color:C.line}, ticks:{color:C.sec, font:{size:11}, autoSkip:false}},
+                 y:{display:false}}},
+      plugins:[barPct]
+    });
+  }
+
+  /* intake by day ------------------------------------------------------ */
+  function renderDays(){
+    document.getElementById('days').innerHTML = M.days.map(function(d){
+      var rows = D.filter(function(t){ return t.day===d; });
+      var opn = rows.filter(function(t){ return !t.done; }).length;
+      return '<div class="dayrow"><div class="dayname">'+esc(rows[0]?rows[0].dayLabel:d)+'</div>' +
+        '<div class="cells">' + rows.map(function(t){
+          return '<i class="cell'+(t.done?'':' o')+'" title="'+esc(t.key)+' — '+esc(t.sum)+'"></i>'; }).join('') + '</div>' +
+        '<div class="dayfig"><b>'+rows.length+'</b> raised · '+opn+' open ('+pct(opn,rows.length)+'%)</div></div>';
+    }).join('');
+  }
+
+  /* render ------------------------------------------------------------- */
+  function render(){
+    var v = view();
+    VIEW_TOTAL = v.length || 1;
+    var done = v.filter(function(t){return t.done;});
+    var opn  = v.filter(function(t){return !t.done;});
+    var ttrs = done.map(function(t){return t.ttr;}).filter(function(x){return x!=null;});
+    var med = median(ttrs);
+    var urgent = v.filter(function(t){ return t.pri==='ShowStopper' || t.pri==='Blocker'; });
+    var stale = opn.filter(function(t){ return t.age!=null && t.age>=48; });
+
+    document.getElementById('kpis').innerHTML =
+      tile('In view', v.length, pct(v.length, D.length), v.length===D.length ? 'the whole export' : 'of '+D.length+' tickets') +
+      tile('Closed', done.length, pct(done.length, v.length), 'of the current view') +
+      tile('Open', opn.length, pct(opn.length, v.length), stale.length+' older than 48 h') +
+      tileRaw('Median to resolve', med==null?'—':hrs(med), ttrs.length+' resolved · '+pct(ttrs.length, v.length)+'% of view') +
+      tile('Urgent', urgent.length, pct(urgent.length, v.length), urgent.filter(function(t){return !t.done;}).length+' still unresolved');
+
+    setAll('.lgDone', 'Closed — ' + done.length + ' (' + pct(done.length, v.length) + '%)');
+    setAll('.lgOpen', 'Open — ' + opn.length + ' (' + pct(opn.length, v.length) + '%)');
+
+    stacked('cType', byKey(v,'type'));
+    stacked('cRegion', byKey(v,'region'));
+    stacked('cMgr', byKey(v,'mgr'));
+    ttrChart(v);
+
+    var maxAge = Math.max.apply(null, opn.map(function(t){return t.age||0;}).concat([1]));
+    document.querySelector('#openTable tbody').innerHTML =
+      opn.slice().sort(function(a,b){ return (b.age||0)-(a.age||0); }).map(function(t){
+        var urgentP = (t.pri==='ShowStopper'||t.pri==='Blocker');
+        return '<tr><td class="tkey">'+esc(t.key)+'</td><td>'+esc(t.sum)+'</td>'+
+          '<td class="muted">'+esc(t.type)+'</td>'+
+          '<td'+(urgentP?' class="flag"':' class="muted"')+'>'+esc(t.pri)+'</td>'+
+          '<td class="muted">'+esc(t.region)+'</td><td class="muted">'+esc(t.mgr)+'</td>'+
+          '<td class="r">'+days(t.age)+'<i class="bar" style="width:'+Math.round((t.age||0)/maxAge*70)+'px;margin-left:auto"></i></td></tr>';
+      }).join('');
+    document.getElementById('openEmpty').hidden = opn.length>0;
+    document.getElementById('openSub').textContent =
+      opn.length+' open, '+pct(opn.length, v.length)+'% of the current view. Oldest first.';
+
+    document.querySelector('#allTable tbody').innerHTML =
+      v.slice().sort(function(a,b){ return (b.ttr==null?1e9:b.ttr)-(a.ttr==null?1e9:a.ttr); }).map(function(t){
+        return '<tr><td class="tkey">'+esc(t.key)+'</td><td>'+esc(t.sum)+'</td>'+
+          '<td class="muted">'+esc(t.cat)+'</td><td class="muted">'+esc(t.region)+'</td>'+
+          '<td'+(t.done?' class="muted"':'')+'>'+esc(t.status)+'</td>'+
+          '<td class="muted">'+esc(t.resolver||'—')+'</td><td class="r">'+hrs(t.ttr)+'</td></tr>';
+      }).join('');
+    document.getElementById('allEmpty').hidden = v.length>0;
+    document.getElementById('allSub').textContent =
+      v.length+' of '+D.length+' tickets, '+pct(v.length, D.length)+'% of the export. Longest running first.';
+
+    Array.prototype.forEach.call(fEl.querySelectorAll('.opt'), function(b){
+      b.setAttribute('aria-pressed', F[b.dataset.k]===b.dataset.v ? 'true' : 'false');
+    });
+  }
+  function tile(lab, n, p, note){
+    return '<div class="kpi"><div class="label">'+lab+'</div><div class="n">'+n+'<span>'+p+'%</span></div><div class="note">'+note+'</div></div>';
+  }
+  function tileRaw(lab, val, note){
+    return '<div class="kpi"><div class="label">'+lab+'</div><div class="n">'+val+'</div><div class="note">'+note+'</div></div>';
+  }
+  function setAll(sel, text){
+    Array.prototype.forEach.call(document.querySelectorAll(sel), function(el){ el.textContent = text; });
+  }
+
+  renderDays();
+  render();
+})();
+</script>
+</body>
+</html>
